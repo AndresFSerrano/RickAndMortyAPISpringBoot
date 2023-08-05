@@ -4,12 +4,15 @@ import com.dvp.rickandmorty.test.Entity.Character;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface CharacterService {
 
     List<Character> fetchCharactersFromApi();
-    boolean isCharacterExistsInApi(String name);
-    boolean isCharacterExistsInDatabase(String name);
+
+    List<Character> getCharacterByName(String name);
+
+    Character saveCharacter(Character character) ;
 
 }

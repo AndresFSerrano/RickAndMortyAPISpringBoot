@@ -10,4 +10,6 @@ public class ApiResponse {
     private InfoApiResponse info;
 
     private List<CharacterApiResponse> results;
+
+    private String error;
 }

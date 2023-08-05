@@ -4,12 +4,14 @@ import com.dvp.rickandmorty.test.Entity.ApiResponse;
 import com.dvp.rickandmorty.test.Entity.Character;
 import com.dvp.rickandmorty.test.Entity.CharacterApiResponse;
 import com.dvp.rickandmorty.test.Entity.repository.CharacterRepository;
+import com.dvp.rickandmorty.test.controller.exceptions.CharacterNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CharacterServiceImpl implements CharacterService{
@@ -50,13 +52,16 @@ public class CharacterServiceImpl implements CharacterService{
     }
 
     @Override
-    public boolean isCharacterExistsInApi(String name) {
-        return false;
+    public List<Character> getCharacterByName(String name) {
+        return characterRepository.findByName(name);
     }
 
     @Override
-    public boolean isCharacterExistsInDatabase(String name) {
-        return false;
+    public Character saveCharacter(Character character)  {
+        Character characterFound = characterRepository.findCharacterByName(character.getName());
+        if(characterFound != null){
+            throw new CharacterNotFoundException("Se encontró este personaje en la base de datos, no se puede agregar");
+        }
+        return characterRepository.save(character);
     }
-
 }
