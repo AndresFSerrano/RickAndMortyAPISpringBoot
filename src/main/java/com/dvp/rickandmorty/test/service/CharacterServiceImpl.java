@@ -6,6 +6,7 @@ import com.dvp.rickandmorty.test.Entity.CharacterApiResponse;
 import com.dvp.rickandmorty.test.Entity.repository.CharacterRepository;
 import com.dvp.rickandmorty.test.controller.exceptions.CharacterNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -55,7 +56,6 @@ public class CharacterServiceImpl implements CharacterService{
     public List<Character> getCharacterByName(String name) {
         return characterRepository.findByName(name);
     }
-
     @Override
     public Character saveCharacter(Character character)  {
         Character characterFound = characterRepository.findCharacterByName(character.getName());
@@ -64,4 +64,21 @@ public class CharacterServiceImpl implements CharacterService{
         }
         return characterRepository.save(character);
     }
+
+    @Override
+    public List<Character> sortByStatus(String status, String sortingType) {
+        return characterRepository.findByStatus(status,sortingType);
+    }
+
+    @Override
+        public List<Character> sortByGender(String gender, String sortingType) {
+        return characterRepository.findByGender(gender,sortingType);
+    }
+
+    @Override
+    public List<Character> sortByName(String name, String sortingType) {
+        return characterRepository.readByNameAndSort(name,sortingType);
+    }
+
+
 }
